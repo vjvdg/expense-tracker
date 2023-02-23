@@ -1,21 +1,25 @@
 package com.vjvdg.expensetracker.model.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.vjvdg.expensetracker.enums.ResponseStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.http.HttpStatus;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class BaseResponse<V> {
+public class BaseResponse<T> {
 
-    private ResponseStatus status;
-    private V data;
+    private HttpStatus status;
+
+    private Integer code;
+
+    private T data;
+
     private String error;
 
 }
