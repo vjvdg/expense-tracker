@@ -6,6 +6,8 @@ import com.vjvdg.expensetracker.service.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,6 +31,16 @@ public class ExpenseController {
                 .status(HttpStatus.OK)
                 .code(HttpStatus.OK.value())
                 .data(expenseDtoList)
+                .build();
+    }
+
+    @PostMapping(value = "/save")
+    public BaseResponse<Object> saveExpense(@RequestBody ExpenseDto expenseDto) {
+        expenseService.saveExpense(expenseDto);
+        return BaseResponse.builder()
+                .status(HttpStatus.OK)
+                .code(HttpStatus.OK.value())
+                .data("Expense successfully saved")
                 .build();
     }
 
