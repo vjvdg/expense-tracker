@@ -27,6 +27,14 @@ public class GlobalExceptionHandler {
         return generateBaseResponse(HttpStatus.BAD_REQUEST, ex);
     }
 
+    @ExceptionHandler(GenericException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public BaseResponse<Object> handleGenericException(GenericException ex) {
+        log.error("Exception: {}", ex.getMessage());
+        return generateBaseResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex);
+    }
+
+
     private BaseResponse<Object> generateBaseResponse(HttpStatus status, Exception ex) {
         return BaseResponse.builder()
                 .status(status)
