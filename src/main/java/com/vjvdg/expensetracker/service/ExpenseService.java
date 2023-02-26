@@ -2,6 +2,8 @@ package com.vjvdg.expensetracker.service;
 
 import com.vjvdg.expensetracker.dto.ExpenseDto;
 import com.vjvdg.expensetracker.entity.ExpenseEntity;
+import com.vjvdg.expensetracker.exception.ExpenseTrackerError;
+import com.vjvdg.expensetracker.exception.GenericException;
 import com.vjvdg.expensetracker.repository.ExpenseEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,16 @@ public class ExpenseService {
     @Transactional
     public void saveExpense(ExpenseDto expenseDto) {
         expenseEntityRepository.save(buildExpenseEntity(expenseDto));
+    }
+
+    @Transactional
+    public void editExpense(Long id, ExpenseDto expenseDto) {
+        ExpenseEntity expenseToEdit = expenseEntityRepository.findById(id)
+                .orElseThrow(() -> new GenericException(ExpenseTrackerError.EXPENSE_NOT_FOUND));
+        expenseToEdit.setItem(expenseDto.getItem());
+        expenseToEdit.setCategory(expenseDto.getCategory());
+        expenseToEdit.setAmount(expenseDto.getAmount());
+        expenseEntityRepository.save(expenseToEdit);
     }
 
     private ExpenseDto convertToExpenseDto(ExpenseEntity expenseEntity) {
