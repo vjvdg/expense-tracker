@@ -46,6 +46,13 @@ public class ExpenseService {
         expenseEntityRepository.save(expenseToEdit);
     }
 
+    @Transactional
+    public void deleteExpense(Long id) {
+        ExpenseEntity expenseToDelete = expenseEntityRepository.findById(id)
+                .orElseThrow(() -> new GenericException(ExpenseTrackerError.EXPENSE_NOT_FOUND));
+        expenseEntityRepository.delete(expenseToDelete);
+    }
+
     private ExpenseDto convertToExpenseDto(ExpenseEntity expenseEntity) {
         return ExpenseDto.builder()
                 .id(expenseEntity.getId())

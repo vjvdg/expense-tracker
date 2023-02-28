@@ -74,7 +74,24 @@ class ExpenseServiceTest {
         ExpenseDto expenseDto = getExpenseDto();
 
         Assertions.assertThrows(GenericException.class, () -> expenseService.editExpense(1L, expenseDto));
+    }
 
+    @Test
+    void shouldDeleteExpenseEntity() {
+        Mockito.when(mockExpenseEntityRepo.findById(any(Long.class)))
+                .thenReturn(Optional.of(getExpenseEntity()));
+
+        expenseService.deleteExpense(1L);
+
+        Mockito.verify(mockExpenseEntityRepo, times(1)).delete(any(ExpenseEntity.class));
+    }
+
+    @Test
+    void shouldThrowExceptionWhenDeletingExpense() {
+        Mockito.when(mockExpenseEntityRepo.findById(any(Long.class)))
+                .thenReturn(Optional.empty());
+
+        Assertions.assertThrows(GenericException.class, () -> expenseService.deleteExpense(1L));
     }
 
 }

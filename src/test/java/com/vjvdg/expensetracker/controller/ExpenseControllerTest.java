@@ -65,4 +65,15 @@ class ExpenseControllerTest {
         Assertions.assertEquals(HttpStatus.OK, status);
     }
 
+    @Test
+    void shouldReturnOkStatusWhenDeletingExpense() {
+        Mockito.doNothing().when(mockExpenseService).deleteExpense(any(Long.class));
+
+        BaseResponse<Object> baseResponse = expenseController.deleteExpense(1L);
+        HttpStatus status = baseResponse.getStatus();
+
+        Assertions.assertNotNull(baseResponse);
+        Assertions.assertEquals(HttpStatus.OK, status);
+    }
+
 }

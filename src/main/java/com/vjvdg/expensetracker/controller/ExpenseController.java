@@ -55,4 +55,14 @@ public class ExpenseController {
                 .build();
     }
 
+    @PostMapping(value = "/delete")
+    public BaseResponse<Object> deleteExpense(@RequestParam Long id) {
+        expenseService.deleteExpense(id);
+        return BaseResponse.builder()
+                .status(HttpStatus.OK)
+                .code(HttpStatus.OK.value())
+                .data("Expense successfully deleted")
+                .build();
+    }
+
 }
