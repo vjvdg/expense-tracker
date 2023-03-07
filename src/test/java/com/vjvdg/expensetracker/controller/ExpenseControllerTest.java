@@ -33,10 +33,10 @@ class ExpenseControllerTest {
 
     @Test
     void shouldReturnListOfExpenses() {
-        Mockito.when(mockExpenseService.getAllExpenses())
+        Mockito.when(mockExpenseService.getExpensesByYearAndMonth(any(Integer.class), any(Integer.class)))
                 .thenReturn(getListOfExpenseDto());
 
-        BaseResponse<List<ExpenseDto>> baseResponse = expenseController.getAllExpenses();
+        BaseResponse<List<ExpenseDto>> baseResponse = expenseController.getExpensesByYearAndMonth(2023, 3);
         List<ExpenseDto> expenses = baseResponse.getData();
 
         Assertions.assertNotNull(expenses);

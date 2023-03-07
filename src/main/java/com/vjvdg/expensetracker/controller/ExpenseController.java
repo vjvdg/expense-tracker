@@ -25,9 +25,9 @@ public class ExpenseController {
         this.expenseService = expenseService;
     }
 
-    @GetMapping(value = "/all")
-    public BaseResponse<List<ExpenseDto>> getAllExpenses() {
-        List<ExpenseDto> expenseDtoList = expenseService.getAllExpenses();
+    @GetMapping(value = "/retrieve")
+    public BaseResponse<List<ExpenseDto>> getExpensesByYearAndMonth(@RequestParam Integer year, @RequestParam Integer month) {
+        List<ExpenseDto> expenseDtoList = expenseService.getExpensesByYearAndMonth(year, month);
         return BaseResponse.<List<ExpenseDto>>builder()
                 .status(HttpStatus.OK)
                 .code(HttpStatus.OK.value())

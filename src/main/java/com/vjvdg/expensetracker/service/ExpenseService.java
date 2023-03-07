@@ -5,6 +5,7 @@ import com.vjvdg.expensetracker.entity.ExpenseEntity;
 import com.vjvdg.expensetracker.exception.ExpenseTrackerError;
 import com.vjvdg.expensetracker.exception.GenericException;
 import com.vjvdg.expensetracker.repository.ExpenseEntityRepository;
+import com.vjvdg.expensetracker.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,9 +25,12 @@ public class ExpenseService {
         this.expenseEntityRepository = expenseEntityRepository;
     }
 
-    public List<ExpenseDto> getAllExpenses() {
+    public List<ExpenseDto> getExpensesByYearAndMonth(Integer year, Integer month) {
         List<ExpenseDto> expenseDtoList = new ArrayList<>();
-        List<ExpenseEntity> expenseEntityList = expenseEntityRepository.findAll();
+        List<ExpenseEntity> expenseEntityList = expenseEntityRepository.findAllByExpenseDateBetweenOrderByExpenseDateAsc(
+                DateUtils.getMonthStartDateTime(year, month),
+                DateUtils.getMonthEndDateTime(year, month)
+        );
         expenseEntityList.forEach(expenseEntity -> expenseDtoList.add(convertToExpenseDto(expenseEntity)));
         return expenseDtoList;
     }

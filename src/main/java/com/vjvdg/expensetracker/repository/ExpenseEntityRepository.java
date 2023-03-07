@@ -4,6 +4,12 @@ import com.vjvdg.expensetracker.entity.ExpenseEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.ZonedDateTime;
+import java.util.List;
+
 @Repository
 public interface ExpenseEntityRepository extends JpaRepository<ExpenseEntity, Long> {
+
+    List<ExpenseEntity> findAllByExpenseDateBetweenOrderByExpenseDateAsc(ZonedDateTime startDate, ZonedDateTime endDate);
+
 }

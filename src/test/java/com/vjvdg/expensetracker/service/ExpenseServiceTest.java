@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,10 +37,10 @@ class ExpenseServiceTest {
 
     @Test
     void shouldReturnListOfExpenses() {
-        Mockito.when(mockExpenseEntityRepo.findAll())
+        Mockito.when(mockExpenseEntityRepo.findAllByExpenseDateBetweenOrderByExpenseDateAsc(any(ZonedDateTime.class), any(ZonedDateTime.class)))
                 .thenReturn(getListOfExpenseEntity());
 
-        List<ExpenseDto> expenseDtoList = expenseService.getAllExpenses();
+        List<ExpenseDto> expenseDtoList = expenseService.getExpensesByYearAndMonth(2023, 3);
 
         Assertions.assertNotNull(expenseDtoList);
         Assertions.assertEquals(2, expenseDtoList.size());
