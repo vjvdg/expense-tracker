@@ -47,6 +47,7 @@ public class ExpenseService {
         expenseToEdit.setItem(expenseDto.getItem());
         expenseToEdit.setCategory(expenseDto.getCategory());
         expenseToEdit.setAmount(expenseDto.getAmount());
+        expenseToEdit.setExpenseDate(expenseDto.getExpenseDate());
         expenseEntityRepository.save(expenseToEdit);
     }
 
