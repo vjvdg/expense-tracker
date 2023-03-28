@@ -10,7 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.ZoneOffset;
+import java.time.Instant;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +74,7 @@ public class ExpenseService {
                 .item(expenseDto.getItem())
                 .category(expenseDto.getCategory())
                 .amount(expenseDto.getAmount())
-                .expenseDate(ZonedDateTime.now(ZoneOffset.UTC))
+                .expenseDate(ZonedDateTime.ofInstant(Instant.now(), ZoneId.of("Asia/Singapore")))
                 .build();
     }
 
