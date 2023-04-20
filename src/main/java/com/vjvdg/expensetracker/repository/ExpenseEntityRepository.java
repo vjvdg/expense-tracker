@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface ExpenseEntityRepository extends JpaRepository<ExpenseEntity, Long> {
 
-    List<ExpenseEntity> findAllByExpenseDateBetweenOrderByExpenseDateAsc(ZonedDateTime startDate, ZonedDateTime endDate);
+    List<ExpenseEntity> findAllByExpenseDateBetweenOrderByExpenseDateDesc(ZonedDateTime startDate, ZonedDateTime endDate);
 
 }

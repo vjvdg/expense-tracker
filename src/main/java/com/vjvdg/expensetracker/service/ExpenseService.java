@@ -6,6 +6,7 @@ import com.vjvdg.expensetracker.exception.ExpenseTrackerError;
 import com.vjvdg.expensetracker.exception.GenericException;
 import com.vjvdg.expensetracker.repository.ExpenseEntityRepository;
 import com.vjvdg.expensetracker.util.DateUtils;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +29,7 @@ public class ExpenseService {
 
     public List<ExpenseDto> getExpensesByYearAndMonth(Integer year, Integer month) {
         List<ExpenseDto> expenseDtoList = new ArrayList<>();
-        List<ExpenseEntity> expenseEntityList = expenseEntityRepository.findAllByExpenseDateBetweenOrderByExpenseDateAsc(
+        List<ExpenseEntity> expenseEntityList = expenseEntityRepository.findAllByExpenseDateBetweenOrderByExpenseDateDesc(
                 DateUtils.getMonthStartDateTime(year, month),
                 DateUtils.getMonthEndDateTime(year, month)
         );
@@ -37,12 +38,16 @@ public class ExpenseService {
     }
 
     @Transactional
+    @SneakyThrows
     public void saveExpense(ExpenseDto expenseDto) {
+        Thread.sleep(1000);
         expenseEntityRepository.save(buildExpenseEntity(expenseDto));
     }
 
     @Transactional
+    @SneakyThrows
     public void editExpense(Long id, ExpenseDto expenseDto) {
+        Thread.sleep(1000);
         ExpenseEntity expenseToEdit = expenseEntityRepository.findById(id)
                 .orElseThrow(() -> new GenericException(ExpenseTrackerError.EXPENSE_NOT_FOUND));
         expenseToEdit.setItem(expenseDto.getItem());
@@ -53,7 +58,9 @@ public class ExpenseService {
     }
 
     @Transactional
+    @SneakyThrows
     public void deleteExpense(Long id) {
+        Thread.sleep(1000);
         ExpenseEntity expenseToDelete = expenseEntityRepository.findById(id)
                 .orElseThrow(() -> new GenericException(ExpenseTrackerError.EXPENSE_NOT_FOUND));
         expenseEntityRepository.delete(expenseToDelete);
