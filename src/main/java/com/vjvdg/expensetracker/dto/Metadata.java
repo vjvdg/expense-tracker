@@ -14,5 +14,6 @@ import java.util.List;
 public class Metadata {
 
     List<String> categories;
+    List<Integer> years;
 
 }
